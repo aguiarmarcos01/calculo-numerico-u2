@@ -1,1 +1,95 @@
-
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyMsO7pM0wjgVIpu+4Ag6z4r",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/aguiarmarcos01/calculo-numerico-u2/blob/main/1_interpolacao_e_ajuste/1_newton\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "id": "zNMmDtHwznmr",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "82b226ac-53e0-427b-e503-b61af2d43816"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Interpolação pelo método de Newton\n",
+            "x = 3.5\n",
+            "y = 4.239062500000001\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Interpolação de Newton (Diferenças Divididas)\n",
+        "# Autor: Marcos Vinicios Aguiar Rocha\n",
+        "\n",
+        "# Dados\n",
+        "x = [1.0, 2.0, 3.0, 4.0, 5.0]\n",
+        "y = [1.2, 1.9, 3.2, 5.5, 8.2]\n",
+        "\n",
+        "xp = 3.5\n",
+        "\n",
+        "n = len(x)\n",
+        "\n",
+        "# Criação da tabela de diferenças divididas\n",
+        "tabela = []\n",
+        "\n",
+        "for i in range(n):\n",
+        "    linha = []\n",
+        "    linha.append(y[i])\n",
+        "    tabela.append(linha)\n",
+        "\n",
+        "# Construção da tabela\n",
+        "for j in range(1, n):\n",
+        "\n",
+        "    for i in range(n - j):\n",
+        "\n",
+        "        valor = (tabela[i + 1][j - 1] - tabela[i][j - 1]) / (x[i + j] - x[i])\n",
+        "\n",
+        "        tabela[i].append(valor)\n",
+        "\n",
+        "# Avaliação do polinômio\n",
+        "resultado = tabela[0][0]\n",
+        "produto = 1\n",
+        "\n",
+        "for i in range(1, n):\n",
+        "\n",
+        "    produto = produto * (xp - x[i - 1])\n",
+        "\n",
+        "    resultado = resultado + tabela[0][i] * produto\n",
+        "\n",
+        "print(\"Interpolação pelo método de Newton\")\n",
+        "print(\"x =\", xp)\n",
+        "print(\"y =\", resultado)\n"
+      ]
+    }
+  ]
+}
